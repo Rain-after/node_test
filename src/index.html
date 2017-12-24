@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>主页</h1>
+    <button class="login">login</button>
+    <button class="register">register</button>
+    <button class="balloon">balloon</button>
+    <button class="time">time</button>
+    <script>
+        document.getElementsByClassName("login")[0].onclick=function(){
+            window.location.href = window.location.href +"login.html";
+        };
+        document.getElementsByClassName("register")[0].onclick = function(){
+            window.location.href = window.location.href +"register.html";
+        }
+        document.getElementsByClassName("balloon")[0].onclick = function(){
+            window.location.href = window.location.href +"balloon.html";
+        }
+        document.getElementsByClassName("time")[0].onclick = function(){
+            window.location.href = window.location.href +"time.html";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>balloon</title>
+    <style>
+        *{
+            padding: 0;margin: 0;
+        }
+        body{
+            overflow: hidden;
+            background: rgb(85, 97, 102);
+            background-image: radial-gradient(tan 20%, transparent 0),
+                              radial-gradient(tan 20%, transparent 0);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+        .balloon{
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            background-color: #faf9f9;
+            border-radius: 160px 160px 64px 160px;
+            transform: rotate(45deg);
+            box-shadow: -8px -8px 80px -8px #873940 inset;
+        }
+        .balloon:after{
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            content: '';
+            border: 8px solid transparent;
+            border-right-color: #873940;
+            transform: rotate(45deg);
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+<script>
+    var num = 10,                       //初始数量
+        wW = window.innerWidth,         //浏览器宽度
+        wH = window.innerHeight,        //浏览器高度
+        timer,                          //初始化定时器
+        aBalloons= [];                  //预存器
+
+    init();
+    setInterval(init,2500);             //循环造气球
+    move();
+    timer = setInterval(move,1000/60);
+
+    document.body.addEventListener('click',function (e) {               //气球点击事件委托
+        if (e.target.className.toLowerCase() === 'balloon'){
+            boom.call(e.target,function () {
+                this.parentNode.removeChild(this);
+                aBalloons.slice(aBalloons.lastIndexOf(this),1);
+            });
+        }
+    },false);
+
+    function boom(cb) {                                                 //气球爆炸效果
+        this.timer = setInterval(function () {
+            if (this.offsetWidth<10){
+                clearInterval(this.timer);
+                cb&&cb();
+            }
+            this.speed++;
+            this.style.width = this.offsetWidth - 10 + 'px';
+            this.style.height = this.offsetHeight - 10 + 'px';
+        }.bind(this),1000/60)
+    }
+
+    function init() {                                                   //造气球
+        var fragment = document.createDocumentFragment();
+        for (var i=0;i<num;i++){
+            var randomX = ~~(Math.random()*wW)-160;
+                randomX = Math.max(0,randomX);
+            var oBallon = document.createElement('div');
+            oBallon.style.top = wH + 'px';
+            oBallon.style.left = randomX + 'px';    //随机气球位置
+            oBallon.speed = ~~(Math.random()*8)+1;  //随机气球上升速度
+            oBallon.className = 'balloon';
+            fragment.appendChild(oBallon);          //添加到文档片段中
+            aBalloons.push(oBallon);                //添加到预存器
+        }
+        num = ~~(Math.random()*10);                 //随机气球数量
+        document.body.appendChild(fragment);        //显示气球
+    }
+
+
+    function move() {                                                   //气球上升
+        for(var i=0,len=aBalloons.length;i<len;i++){
+            aBalloons[i].style.top = aBalloons[i].offsetTop - aBalloons[i].speed +'px';
+            if(parseInt(aBalloons[i].offsetTop) <= -180){
+                document.body.removeChild(aBalloons[i]);
+                aBalloons.slice(aBalloons.indexOf(aBalloons[i]),1);
+            }
+        }
+
+    }
+
+
+</script>
+</body>
+</html>
