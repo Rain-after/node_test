@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Message</title>
+    <style>
+    form{
+        height: 50px;
+        background-color: #ccc;
+        text-align: center;
+    }
+    #msg{
+        width: 30%;
+        height: 70%;
+        margin-top: 5px;
+    }
+    #push{
+        width: 5%;
+        height: 70%;
+    }
+    </style>
+</head>
+<body>
+    <form action="/push" method="get">
+        <label for="msg"></label>
+        <input type="text" name="msg" id="msg">
+        <input type="submit" value="留言">
+    </form>
+</body>
+</html>
